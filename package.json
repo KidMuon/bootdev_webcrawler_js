@@ -1,0 +1,12 @@
+{
+  "name": "js_web_crawler",
+  "version": "1.0.0",
+  "description": "boot.dev javascript web crawler project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node main.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
