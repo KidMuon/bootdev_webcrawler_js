@@ -1,4 +1,4 @@
-import { crawlPage } from "./crawl.js";
+import { crawlPage, normalizeURL } from "./crawl.js";
 
 function getBaseURLFromArguments() {
 	const NUMBER_OF_ARGUMENTS = process.argv.length;
@@ -23,7 +23,9 @@ async function main() {
 	}
 
 	console.log(`Starting crawl of ${baseURL}`);
-	await crawlPage(baseURL);
+	const pages = await crawlPage(baseURL);
+
+	console.log(pages);
 
 	return
 }

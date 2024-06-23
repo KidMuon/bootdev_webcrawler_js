@@ -2,19 +2,19 @@ import { test, expect } from "@jest/globals";
 import { normalizeURL, getURLsFromHTML } from "./crawl.js";
 
 test('Normalize https://blog.boot.dev/path/ to blog.boot.dev/path', () => {
-	expect(normalizeURL("https://blog.boot.dev/path/")).toBe("blog.boot.dev/path");
+	expect(normalizeURL("https://blog.boot.dev/path/")).toBe("https://blog.boot.dev/path");
 })
 
 test('Normalize https://blog.boot.dev/path to blog.boot.dev/path', () => {
-	expect(normalizeURL("https://blog.boot.dev/path ")).toBe("blog.boot.dev/path");
+	expect(normalizeURL("https://blog.boot.dev/path ")).toBe("https://blog.boot.dev/path");
 })
 
 test('Normalize http://blog.boot.dev/path/ to blog.boot.dev/path', () => {
-	expect(normalizeURL("http://blog.boot.dev/path/")).toBe("blog.boot.dev/path");
+	expect(normalizeURL("http://blog.boot.dev/path/")).toBe("http://blog.boot.dev/path");
 })
 
 test('Normalize http://blog.boot.dev/path to blog.boot.dev/path', () => {
-	expect(normalizeURL("http://blog.boot.dev/path")).toBe("blog.boot.dev/path");
+	expect(normalizeURL("http://blog.boot.dev/path")).toBe("http://blog.boot.dev/path");
 })
 
 test('Absolute URLs remain as Absolute URLs', () => {
