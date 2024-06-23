@@ -28,22 +28,41 @@ async function crawlPage(baseURL, pageURL = baseURL, pages = {}) {
 
 	if (pages.hasOwnProperty(currentURL)) {
 		pages[currentURL]++;
-	} else {
-		pages[currentURL] = 1;
+		return pages;
+	}
+	
+	pages[currentURL] = 1;
+
+	const urlsOnPage = await fetchURLsFromPage(currentURL);
+	
+	if (!urlsOnPage) {
+		return pages;
 	}
 
-	const response = await fetch(currentURL);
+	for (let url of urlsOnPage) {
+		pages = await crawlPage(baseURL, url, pages);
+	}
+
+	return pages;
+}
+
+async function fetchURLsFromPage(currentURL) {
+	let response
+	try{
+		response = await fetch(currentURL);
+	} catch (err) {
+		throw new Error(`Error: ${response.status} ${response.statusText}`);
+	}
 	
 	if (response.status >= 400) {
 		console.log(`Error: HTTP code ${response.status} returned from ${currentURL}`);
 		return;
 	} else if (!response.headers.get('content-type').includes('text/html')) {
 		console.log('Error: Content-type is not text/html.');
+		return;
 	}
 
-	//console.log(await response.text());
-
-	return pages;
+	return getURLsFromHTML(await response.text(), currentURL);
 }
 
 export {normalizeURL, getURLsFromHTML, crawlPage};
