@@ -1,12 +1,26 @@
-import { getURLsFromHTML } from "./crawl.js";
+function getBaseURLFromArguments() {
+	const NUMBER_OF_ARGUMENTS = process.argv.length;
 
-const htmlBody = `
-	<html>
-    	<body>
-        	<a href="/lessons"><span>Go to Boot.dev lessons</span></a>
-    	</body>
-	</html>
-	`;
-const baseURL = 'https://boot.dev';
+	if (NUMBER_OF_ARGUMENTS > 3) {
+		console.log('ERROR: Too Many Arguments Passed.');
+		process.exitCode = 9;
+		return;
+	} else if (NUMBER_OF_ARGUMENTS <= 2) {
+		console.log('ERROR: No Base URL provided.');
+		process.exitCode = 9;
+		return;
+	}
 
-console.log(getURLsFromHTML(htmlBody, baseURL));
+	return process.argv[2];
+}
+
+function main() {
+	const baseURL = getBaseURLFromArguments();
+	if (!baseURL) {
+		return;
+	}
+
+	console.log(baseURL);
+}
+
+main();
