@@ -1,3 +1,5 @@
+import { crawlPage } from "./crawl.js";
+
 function getBaseURLFromArguments() {
 	const NUMBER_OF_ARGUMENTS = process.argv.length;
 
@@ -14,13 +16,16 @@ function getBaseURLFromArguments() {
 	return process.argv[2];
 }
 
-function main() {
+async function main() {
 	const baseURL = getBaseURLFromArguments();
 	if (!baseURL) {
 		return;
 	}
 
-	console.log(baseURL);
+	console.log(`Starting crawl of ${baseURL}`);
+	await crawlPage(baseURL);
+
+	return
 }
 
-main();
+await main();
